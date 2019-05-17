@@ -39,11 +39,6 @@ echo ""
 chmod +x list ./list > /dev/null 2>&1
 echo ""
 sleep 2
-  echo -e "\033[1;31mErro \033[1;32mNome vazio!\033[0m"
-  rm -rf $HOME/Plus $_lsk/list > /dev/null 2>&1
-  sleep 2
-  clear; exit 1
-fi
 IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 if [[ "$IP" = "" ]]; then
   IP=$(wget -qO- ipv4.icanhazip.com)
