@@ -3,6 +3,7 @@ wget https://raw.githubusercontent.com/dgconnect/ssh/master/list > /dev/null 2>&
 wget https://raw.githubusercontent.com/dgconnect/ssh/master/versao -O /bin/versao > /dev/null 2>&1
 wget https://raw.githubusercontent.com/dgconnect/ssh/master/licence -O /usr/lib/licence > /dev/null 2>&1
 clear
+clear
 [[ "$EUID" -ne 0 ]] && echo -e "\033[1;33mDesculpe, \033[1;33mvocê precisa executar como root\033[0m" && rm -rf $HOME/Plus > /dev/null 2>&1 && return 1
 cd $HOME
 fun_bar () {
@@ -33,6 +34,20 @@ tput cnorm
 }
 echo -e "\033[1;31m════════════════════════════════════════════════════\033[0m"
 tput setaf 7 ; tput setab 4 ; tput bold ; printf '%40s%s%-12s\n' "BEM VINDO AO SSHPLUS MANAGER" ; tput sgr0
+echo -e "\033[1;31m════════════════════════════════════════════════════\033[0m"
+echo ""
+chmod +x list ./list > /dev/null 2>&1
+echo ""
+sleep 2
+  echo -e "\033[1;31mErro \033[1;32mNome vazio!\033[0m"
+  rm -rf $HOME/Plus $_lsk/list > /dev/null 2>&1
+  sleep 2
+  clear; exit 1
+fi
+IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
+if [[ "$IP" = "" ]]; then
+  IP=$(wget -qO- ipv4.icanhazip.com)
+fi
 echo ""
 echo -ne "\033[1;36mPara continuar confirme seu IP \033[1;37m"; read -e -i $IP ipdovps
 if [ -z "$ipdovps" ]; then
